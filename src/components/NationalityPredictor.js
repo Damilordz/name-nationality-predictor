@@ -67,12 +67,23 @@ function NationalityPredictor() {
         <div className="result-container">
           <h2>Result:</h2>
           <p><strong>Name:</strong> {name}</p>
-          <p><strong>Country ID:</strong> {nationality.country_id}</p>
+          <p><strong>Country ID:</strong> {getCountryName(nationality.country_id)}</p>
           <p><strong>Probability:</strong> {(nationality.probability * 100).toFixed(0)}%</p>
         </div>
       )}
     </div>
   );
+}
+
+// Function to get country name using country code
+function getCountryName(countryCode) {
+  try {
+    const displayName = new Intl.DisplayNames(["en"], { type: "region" });
+    return displayName.of(countryCode);
+  } catch (error) {
+    console.error("Error getting country name:", error);
+    return "Unknown";
+  }
 }
 
 export default NationalityPredictor;
